@@ -1,6 +1,6 @@
 package com.company.erp.sneakerstorespringboot.repository;
 
-import com.company.erp.sneakerstorespringboot.entity.Category;
+import com.company.erp.sneakerstorespringboot.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

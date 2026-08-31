@@ -1,4 +1,4 @@
-package com.company.erp.sneakerstorespringboot.entity;
+package com.company.erp.sneakerstorespringboot.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
