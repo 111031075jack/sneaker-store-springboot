@@ -4,7 +4,6 @@ import com.company.erp.sneakerstorespringboot.model.dto.CategoryRequest;
 import com.company.erp.sneakerstorespringboot.model.entity.Category;
 import com.company.erp.sneakerstorespringboot.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
