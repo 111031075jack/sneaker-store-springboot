@@ -1,16 +1,14 @@
 package com.company.erp.sneakerstorespringboot.controller;
 
 import com.company.erp.sneakerstorespringboot.model.dto.CategoryRequest;
+import com.company.erp.sneakerstorespringboot.model.entity.Category;
 import com.company.erp.sneakerstorespringboot.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -70,6 +68,26 @@ public class CategoryController {
 
         return "redirect:/admin/categories";
     }
+
+    @GetMapping("/{id}/edit")
+    public String showEditForm(@PathVariable Long id, Model model) {
+
+        Category category = categoryService.findById(id);
+
+        CategoryRequest categoryRequest = new CategoryRequest();
+
+        categoryRequest.setName(category.getName());
+        categoryRequest.setSlug(category.getSlug());
+        categoryRequest.setActive(category.isActive());
+
+        model.addAttribute("categoryRequest", categoryRequest);
+
+        model.addAttribute("categoryId", id);
+
+        return "admin/category/form";
+    }
+
+
 
 
 }
