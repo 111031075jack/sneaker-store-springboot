@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+    >
+
+    <title
+            th:text="${categoryId == null
+            ? '新增分類'
+            : '修改分類'}"
+    >
+        分類表單
+    </title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin.css}"
+    >
+</head>
+
+<body class="admin-page">
+
+<main class="admin-container form-container">
+
+    <header class="page-header">
+
+        <div>
+            <p class="eyebrow">
+                Sneaker Store Admin
+            </p>
+
+            <h1
+                    class="page-title"
+                    th:text="${categoryId == null
+                    ? '新增分類'
+                    : '修改分類'}"
+            >
+                分類表單
+            </h1>
+
+            <p class="page-description">
+                設定分類名稱、網址代稱以及是否啟用。
+            </p>
+        </div>
+
+        <a
+                class="btn btn-secondary"
+                th:href="@{/admin/categories}"
+        >
+            返回列表
+        </a>
+
+    </header>
+
+    <section class="panel form-panel">
+
+        <form
+                th:object="${categoryRequest}"
+                th:action="${categoryId == null
+                ? '/admin/categories'
+                : '/admin/categories/' + categoryId}"
+                method="post"
+        >
+
+            <div
+                    class="alert alert-error"
+                    th:if="${#fields.hasGlobalErrors()}"
+            >
+                <div
+                        th:each="error : ${#fields.globalErrors()}"
+                        th:text="${error}"
+                >
+                    表單錯誤
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <label
+                        class="form-label"
+                        for="name"
+                >
+                    分類名稱
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                        id="name"
+                        class="form-control"
+                        th:classappend="${#fields.hasErrors('name')}
+                        ? ' form-control-error'"
+                        type="text"
+                        th:field="*{name}"
+                        placeholder="例如：籃球鞋"
+                        autocomplete="off"
+                >
+
+                <p class="form-hint">
+                    顯示在前台商品分類與後台管理頁面。
+                </p>
+
+                <p
+                        class="field-error"
+                        th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}"
+                >
+                    分類名稱錯誤
+                </p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label
+                        class="form-label"
+                        for="slug"
+                >
+                    Slug
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                        id="slug"
+                        class="form-control"
+                        th:classappend="${#fields.hasErrors('slug')}
+                        ? ' form-control-error'"
+                        type="text"
+                        th:field="*{slug}"
+                        placeholder="例如：basketball-shoes"
+                        autocomplete="off"
+                >
+
+                <p class="form-hint">
+                    只能使用小寫英文、數字及連字號，例如
+                    basketball-shoes。
+                </p>
+
+                <p
+                        class="field-error"
+                        th:if="${#fields.hasErrors('slug')}"
+                        th:errors="*{slug}"
+                >
+                    Slug 錯誤
+                </p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="checkbox-label">
+
+                    <input
+                            type="checkbox"
+                            th:field="*{active}"
+                    >
+
+                    啟用這個分類
+
+                </label>
+
+                <p class="form-hint">
+                    停用後可以保留分類資料，但不在前台使用。
+                </p>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                        class="btn btn-primary"
+                        type="submit"
+                        th:text="${categoryId == null
+                        ? '建立分類'
+                        : '儲存修改'}"
+                >
+                    儲存
+                </button>
+
+                <a
+                        class="btn btn-secondary"
+                        th:href="@{/admin/categories}"
+                >
+                    取消
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>

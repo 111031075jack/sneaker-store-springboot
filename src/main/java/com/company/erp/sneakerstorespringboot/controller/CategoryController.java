@@ -87,7 +87,55 @@ public class CategoryController {
         return "admin/category/form";
     }
 
+    @PostMapping("/{id}")
+    public String update(@PathVariable Long id,
+                         @Valid
+                         @ModelAttribute("/categoryRequest")
+                         CategoryRequest request,
+                         BindingResult result,
+                         Model model,
+                         RedirectAttributes redirectAttributes
+                         ){
+        if(result.hasErrors()) {
 
+            model.addAttribute("categoryId", id);
+
+            return "admin/category/form";
+        }
+
+        try{
+            categoryService.update(id, request);
+        } catch (IllegalArgumentException e) {
+
+            result.reject("category.update",e.getMessage());
+
+            model.addAttribute("categoryId", id);
+
+            return "admin/category/form";
+
+        }
+        redirectAttributes.addFlashAttribute("success", "分類修改成功");
+
+        return "redirect:/admin/categories";
+    }
+
+
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id,
+                         RedirectAttributes redirectAttributes){
+
+        try{
+            categoryService.delete(id);
+
+            redirectAttributes.addFlashAttribute("success", "分類刪除成功");
+
+        } catch (IllegalArgumentException e) {
+
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+
+        }
+        return "redirect:/admin/categories";
+    }
 
 
 }

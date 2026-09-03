@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+    >
+
+    <title>分類管理</title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin.css}"
+    >
+</head>
+
+<body class="admin-page">
+
+<main class="admin-container">
+
+    <header class="page-header">
+
+        <div>
+            <p class="eyebrow">
+                Sneaker Store Admin
+            </p>
+
+            <h1 class="page-title">
+                分類管理
+            </h1>
+
+            <p class="page-description">
+                管理商店中的鞋款分類、網址代稱及啟用狀態。
+            </p>
+        </div>
+
+        <a
+                class="btn btn-primary"
+                th:href="@{/admin/categories/new}"
+        >
+            ＋ 新增分類
+        </a>
+
+    </header>
+
+    <div
+            class="alert alert-success"
+            th:if="${success}"
+            th:text="${success}"
+    >
+        操作成功
+    </div>
+
+    <div
+            class="alert alert-error"
+            th:if="${error}"
+            th:text="${error}"
+    >
+        操作失敗
+    </div>
+
+    <section class="panel">
+
+        <div class="table-wrapper">
+
+            <table class="category-table">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>分類名稱</th>
+                    <th>Slug</th>
+                    <th>狀態</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(categories)}">
+                    <td
+                            class="empty-state"
+                            colspan="5"
+                    >
+                        目前還沒有分類，建立第一個分類吧。
+                    </td>
+                </tr>
+
+                <tr th:each="category : ${categories}">
+
+                    <td
+                            class="category-id"
+                            th:text="${category.id}"
+                    >
+                        1
+                    </td>
+
+                    <td
+                            class="category-name"
+                            th:text="${category.name}"
+                    >
+                        籃球鞋
+                    </td>
+
+                    <td
+                            class="slug"
+                            th:text="${category.slug}"
+                    >
+                        basketball
+                    </td>
+
+                    <td>
+
+                        <span
+                                class="status status-active"
+                                th:if="${category.active}"
+                        >
+                            啟用
+                        </span>
+
+                        <span
+                                class="status status-inactive"
+                                th:unless="${category.active}"
+                        >
+                            停用
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    class="btn btn-secondary btn-small"
+                                    th:href="@{/admin/categories/{id}/edit(id=${category.id})}"
+                            >
+                                修改
+                            </a>
+
+                            <form
+                                    class="inline-form"
+                                    th:action="@{/admin/categories/{id}/delete(id=${category.id})}"
+                                    method="post"
+                                    onsubmit="return confirm('確定要刪除這個分類嗎？');"
+                            >
+                                <button
+                                        class="btn btn-danger btn-small"
+                                        type="submit"
+                                >
+                                    刪除
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>
