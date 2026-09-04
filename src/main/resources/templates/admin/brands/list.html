@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+    >
+
+    <title>品牌管理</title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin.css}"
+    >
+</head>
+
+<body class="admin-page">
+
+<main class="admin-container">
+
+    <header class="page-header">
+
+        <div>
+            <p class="eyebrow">
+                Sneaker Store Admin
+            </p>
+
+            <h1 class="page-title">
+                品牌管理
+            </h1>
+
+            <p class="page-description">
+                管理品牌名稱、網址代稱及啟用狀態。
+            </p>
+        </div>
+
+        <a
+                class="btn btn-primary"
+                th:href="@{/admin/brands/new}"
+        >
+            ＋ 新增品牌
+        </a>
+
+    </header>
+
+    <div
+            class="alert alert-success"
+            th:if="${success}"
+            th:text="${success}"
+    >
+        操作成功
+    </div>
+
+    <div
+            class="alert alert-error"
+            th:if="${error}"
+            th:text="${error}"
+    >
+        操作失敗
+    </div>
+
+    <section class="panel">
+
+        <div class="table-wrapper">
+
+            <table class="data-table">
+
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名稱</th>
+                    <th>Slug</th>
+                    <th>狀態</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:if="${#lists.isEmpty(brands)}">
+                    <td
+                            class="empty-state"
+                            colspan="5"
+                    >
+                        目前還沒有品牌。
+                    </td>
+                </tr>
+
+                <tr th:each="brand : ${brands}">
+
+                    <td
+                            class="record-id"
+                            th:text="${brand.id}"
+                    >
+                        1
+                    </td>
+
+                    <td
+                            class="record-name"
+                            th:text="${brand.name}"
+                    >
+                        Nike
+                    </td>
+
+                    <td
+                            class="slug"
+                            th:text="${brand.slug}"
+                    >
+                        nike
+                    </td>
+
+                    <td>
+
+                        <span
+                                class="status status-active"
+                                th:if="${brand.active}"
+                        >
+                            啟用
+                        </span>
+
+                        <span
+                                class="status status-inactive"
+                                th:unless="${brand.active}"
+                        >
+                            停用
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                    class="btn btn-secondary btn-small"
+                                    th:href="@{/admin/brands/{id}/edit(id=${brand.id})}"
+                            >
+                                修改
+                            </a>
+
+                            <form
+                                    class="inline-form"
+                                    th:action="@{/admin/brands/{id}/delete(id=${brand.id})}"
+                                    method="post"
+                                    onsubmit="return confirm('確定要刪除這個品牌嗎？');"
+                            >
+                                <button
+                                        class="btn btn-danger btn-small"
+                                        type="submit"
+                                >
+                                    刪除
+                                </button>
+                            </form>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1"
+    >
+
+    <title>品牌表單</title>
+
+    <link
+            rel="stylesheet"
+            th:href="@{/css/admin.css}"
+    >
+</head>
+
+<body class="admin-page">
+
+<main class="admin-container form-container">
+
+    <header class="page-header">
+
+        <div>
+            <p class="eyebrow">
+                Sneaker Store Admin
+            </p>
+
+            <h1
+                    class="page-title"
+                    th:if="${brandId == null}"
+            >
+                新增品牌
+            </h1>
+
+            <h1
+                    class="page-title"
+                    th:unless="${brandId == null}"
+            >
+                修改品牌
+            </h1>
+
+            <p class="page-description">
+                設定品牌名稱、網址代稱及啟用狀態。
+            </p>
+        </div>
+
+        <a
+                class="btn btn-secondary"
+                th:href="@{/admin/brands}"
+        >
+            返回列表
+        </a>
+
+    </header>
+
+    <section class="panel form-panel">
+
+        <form
+                th:object="${brandRequest}"
+                th:action="${brandId == null ? '/admin/brands' : '/admin/brands/' + brandId}"
+                method="post"
+        >
+
+            <div
+                    class="alert alert-error"
+                    th:if="${#fields.hasGlobalErrors()}"
+            >
+                <p
+                        th:each="error : ${#fields.globalErrors()}"
+                        th:text="${error}"
+                >
+                    表單錯誤
+                </p>
+            </div>
+
+            <div class="form-group">
+
+                <label
+                        class="form-label"
+                        for="name"
+                >
+                    名稱
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                        id="name"
+                        class="form-control"
+                        type="text"
+                        th:field="*{name}"
+                        placeholder="例如：Nike"
+                        autocomplete="off"
+                >
+
+                <p class="form-hint">
+                    顯示在商品資料與品牌頁面的名稱。
+                </p>
+
+                <p
+                        class="field-error"
+                        th:if="${#fields.hasErrors('name')}"
+                        th:errors="*{name}"
+                >
+                    名稱錯誤
+                </p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label
+                        class="form-label"
+                        for="slug"
+                >
+                    Slug
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                        id="slug"
+                        class="form-control"
+                        type="text"
+                        th:field="*{slug}"
+                        placeholder="例如：new-balance"
+                        autocomplete="off"
+                >
+
+                <p class="form-hint">
+                    只能使用小寫英文、數字及連字號，例如 new-balance。
+                </p>
+
+                <p
+                        class="field-error"
+                        th:if="${#fields.hasErrors('slug')}"
+                        th:errors="*{slug}"
+                >
+                    Slug 錯誤
+                </p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label class="checkbox-label">
+
+                    <input
+                            type="checkbox"
+                            th:field="*{active}"
+                    >
+
+                    啟用這個品牌
+
+                </label>
+
+                <p class="form-hint">
+                    停用後保留品牌資料，但不提供給前台商品使用。
+                </p>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button
+                        class="btn btn-primary"
+                        type="submit"
+                        th:if="${brandId == null}"
+                >
+                    建立品牌
+                </button>
+
+                <button
+                        class="btn btn-primary"
+                        type="submit"
+                        th:unless="${brandId == null}"
+                >
+                    儲存修改
+                </button>
+
+                <a
+                        class="btn btn-secondary"
+                        th:href="@{/admin/brands}"
+                >
+                    取消
+                </a>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+</body>
+</html>

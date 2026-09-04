@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-Hant"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>後台管理首頁</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin.css}"
+          href="/css/admin.css">
+</head>
+
+<body class="admin-page">
+
+<main class="admin-container">
+
+    <header class="page-header">
+        <div>
+            <p class="eyebrow">
+                Sneaker Store Admin
+            </p>
+
+            <h1 class="page-title">
+                後台管理
+            </h1>
+
+            <p class="page-description">
+                管理商店中的分類、品牌、商品、庫存及訂單。
+            </p>
+        </div>
+    </header>
+
+    <section class="dashboard-grid">
+
+        <!-- 分類管理 -->
+        <article class="panel dashboard-card">
+
+            <div>
+                <p class="dashboard-card-label">
+                    Category
+                </p>
+
+                <h2 class="dashboard-card-title">
+                    分類管理
+                </h2>
+
+                <p class="dashboard-card-description">
+                    新增、修改或停用鞋款分類。
+                </p>
+            </div>
+
+            <a class="btn btn-primary"
+               th:href="@{/admin/categories}">
+                進入分類管理
+            </a>
+
+        </article>
+
+        <!-- 品牌管理 -->
+        <article class="panel dashboard-card">
+
+            <div>
+                <p class="dashboard-card-label">
+                    Brand
+                </p>
+
+                <h2 class="dashboard-card-title">
+                    品牌管理
+                </h2>
+
+                <p class="dashboard-card-description">
+                    新增、修改或停用商品品牌。
+                </p>
+            </div>
+
+            <a class="btn btn-primary"
+               th:href="@{/admin/brands}">
+                進入品牌管理
+            </a>
+
+        </article>
+
+        <!-- 商品管理 -->
+        <article class="panel dashboard-card">
+
+            <div>
+                <p class="dashboard-card-label">
+                    Product
+                </p>
+
+                <h2 class="dashboard-card-title">
+                    商品管理
+                </h2>
+
+                <p class="dashboard-card-description">
+                    管理鞋款商品、售價、圖片及上下架狀態。
+                </p>
+            </div>
+
+            <span class="dashboard-pending">
+                尚未建立
+            </span>
+
+        </article>
+
+        <!-- 庫存管理 -->
+        <article class="panel dashboard-card">
+
+            <div>
+                <p class="dashboard-card-label">
+                    Inventory
+                </p>
+
+                <h2 class="dashboard-card-title">
+                    庫存管理
+                </h2>
+
+                <p class="dashboard-card-description">
+                    管理不同尺寸、商品編號及庫存數量。
+                </p>
+            </div>
+
+            <span class="dashboard-pending">
+                尚未建立
+            </span>
+
+        </article>
+
+    </section>
+
+</main>
+
+</body>
+</html>

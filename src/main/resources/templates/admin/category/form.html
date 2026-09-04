@@ -4,24 +4,16 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-    >
-
-    <title
-            th:text="${categoryId == null
-            ? '新增分類'
-            : '修改分類'}"
-    >
+    <title th:text="${categoryId == null ? '新增分類' : '修改分類'}">
         分類表單
     </title>
 
-    <link
-            rel="stylesheet"
-            th:href="@{/css/admin.css}"
-    >
+    <link rel="stylesheet"
+          th:href="@{/css/admin.css}"
+          href="/css/admin.css">
 </head>
 
 <body class="admin-page">
@@ -29,139 +21,103 @@
 <main class="admin-container form-container">
 
     <header class="page-header">
-
         <div>
-            <p class="eyebrow">
-                Sneaker Store Admin
-            </p>
+            <p class="eyebrow">Sneaker Store Admin</p>
 
-            <h1
-                    class="page-title"
-                    th:text="${categoryId == null
-                    ? '新增分類'
-                    : '修改分類'}"
-            >
-                分類表單
+            <h1 class="page-title"
+                th:text="${categoryId == null ? '新增分類' : '修改分類'}">
+                新增分類
             </h1>
 
             <p class="page-description">
-                設定分類名稱、網址代稱以及是否啟用。
+                填寫分類名稱、網址代稱及啟用狀態。
             </p>
         </div>
-
-        <a
-                class="btn btn-secondary"
-                th:href="@{/admin/categories}"
-        >
-            返回列表
-        </a>
-
     </header>
 
     <section class="panel form-panel">
 
-        <form
-                th:object="${categoryRequest}"
-                th:action="${categoryId == null
-                ? '/admin/categories'
-                : '/admin/categories/' + categoryId}"
-                method="post"
-        >
+        <form th:object="${categoryRequest}"
+              th:action="${categoryId == null
+                  ? '/admin/categories'
+                  : '/admin/categories/' + categoryId}"
+              method="post">
 
-            <div
-                    class="alert alert-error"
-                    th:if="${#fields.hasGlobalErrors()}"
-            >
-                <div
-                        th:each="error : ${#fields.globalErrors()}"
-                        th:text="${error}"
-                >
+            <!-- Service 拋出的整體錯誤，例如名稱或 Slug 已存在 -->
+            <div class="alert alert-error"
+                 th:if="${#fields.hasGlobalErrors()}">
+
+                <p th:each="error : ${#fields.globalErrors()}"
+                   th:text="${error}">
                     表單錯誤
-                </div>
+                </p>
+
             </div>
 
+            <!-- 名稱 -->
             <div class="form-group">
 
-                <label
-                        class="form-label"
-                        for="name"
-                >
-                    分類名稱
+                <label class="form-label"
+                       for="name">
+                    名稱
                     <span class="required">*</span>
                 </label>
 
-                <input
-                        id="name"
-                        class="form-control"
-                        th:classappend="${#fields.hasErrors('name')}
-                        ? ' form-control-error'"
-                        type="text"
-                        th:field="*{name}"
-                        placeholder="例如：籃球鞋"
-                        autocomplete="off"
-                >
+                <input class="form-control"
+                       id="name"
+                       type="text"
+                       th:field="*{name}"
+                       th:errorclass="form-control-error"
+                       placeholder="例如：籃球鞋">
+
+                <p class="field-error"
+                   th:if="${#fields.hasErrors('name')}"
+                   th:errors="*{name}">
+                    名稱錯誤
+                </p>
 
                 <p class="form-hint">
                     顯示在前台商品分類與後台管理頁面。
                 </p>
 
-                <p
-                        class="field-error"
-                        th:if="${#fields.hasErrors('name')}"
-                        th:errors="*{name}"
-                >
-                    分類名稱錯誤
-                </p>
-
             </div>
 
+            <!-- Slug -->
             <div class="form-group">
 
-                <label
-                        class="form-label"
-                        for="slug"
-                >
+                <label class="form-label"
+                       for="slug">
                     Slug
                     <span class="required">*</span>
                 </label>
 
-                <input
-                        id="slug"
-                        class="form-control"
-                        th:classappend="${#fields.hasErrors('slug')}
-                        ? ' form-control-error'"
-                        type="text"
-                        th:field="*{slug}"
-                        placeholder="例如：basketball-shoes"
-                        autocomplete="off"
-                >
+                <input class="form-control"
+                       id="slug"
+                       type="text"
+                       th:field="*{slug}"
+                       th:errorclass="form-control-error"
+                       placeholder="例如：basketball-shoes">
 
-                <p class="form-hint">
-                    只能使用小寫英文、數字及連字號，例如
-                    basketball-shoes。
+                <p class="field-error"
+                   th:if="${#fields.hasErrors('slug')}"
+                   th:errors="*{slug}">
+                    Slug 錯誤
                 </p>
 
-                <p
-                        class="field-error"
-                        th:if="${#fields.hasErrors('slug')}"
-                        th:errors="*{slug}"
-                >
-                    Slug 錯誤
+                <p class="form-hint">
+                    只能使用小寫英文、數字及連字號，例如 basketball-shoes。
                 </p>
 
             </div>
 
+            <!-- 啟用狀態 -->
             <div class="form-group">
 
                 <label class="checkbox-label">
+                    <input type="checkbox"
+                           th:field="*{active}">
 
-                    <input
-                            type="checkbox"
-                            th:field="*{active}"
-                    >
-
-                    啟用這個分類
-
+                    <span>啟用這個分類</span>
                 </label>
 
                 <p class="form-hint">
@@ -170,22 +126,19 @@
 
             </div>
 
+            <!-- 按鈕 -->
             <div class="form-actions">
 
-                <button
-                        class="btn btn-primary"
+                <button class="btn btn-primary"
                         type="submit"
                         th:text="${categoryId == null
-                        ? '建立分類'
-                        : '儲存修改'}"
-                >
-                    儲存
+                            ? '建立分類'
+                            : '儲存修改'}">
+                    建立分類
                 </button>
 
-                <a
-                        class="btn btn-secondary"
-                        th:href="@{/admin/categories}"
-                >
+                <a class="btn btn-secondary"
+                   th:href="@{/admin/categories}">
                     取消
                 </a>
 

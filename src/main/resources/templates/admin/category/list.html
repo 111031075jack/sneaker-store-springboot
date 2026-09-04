@@ -4,18 +4,14 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1"
-    >
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>分類管理</title>
 
-    <link
-            rel="stylesheet"
-            th:href="@{/css/admin.css}"
-    >
+    <link rel="stylesheet"
+          th:href="@{/css/admin.css}"
+          href="/css/admin.css">
 </head>
 
 <body class="admin-page">
@@ -23,43 +19,33 @@
 <main class="admin-container">
 
     <header class="page-header">
-
         <div>
-            <p class="eyebrow">
-                Sneaker Store Admin
-            </p>
+            <p class="eyebrow">Sneaker Store Admin</p>
 
-            <h1 class="page-title">
-                分類管理
-            </h1>
+            <h1 class="page-title">分類管理</h1>
 
             <p class="page-description">
                 管理商店中的鞋款分類、網址代稱及啟用狀態。
             </p>
         </div>
 
-        <a
-                class="btn btn-primary"
-                th:href="@{/admin/categories/new}"
-        >
+        <a class="btn btn-primary"
+           th:href="@{/admin/categories/new}">
             ＋ 新增分類
         </a>
-
     </header>
 
-    <div
-            class="alert alert-success"
-            th:if="${success}"
-            th:text="${success}"
-    >
+    <!-- 建立、修改或刪除成功訊息 -->
+    <div class="alert alert-success"
+         th:if="${success}"
+         th:text="${success}">
         操作成功
     </div>
 
-    <div
-            class="alert alert-error"
-            th:if="${error}"
-            th:text="${error}"
-    >
+    <!-- 刪除失敗等錯誤訊息 -->
+    <div class="alert alert-error"
+         th:if="${error}"
+         th:text="${error}">
         操作失敗
     </div>
 
@@ -67,12 +53,12 @@
 
         <div class="table-wrapper">
 
-            <table class="category-table">
+            <table class="data-table">
 
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>分類名稱</th>
+                    <th>名稱</th>
                     <th>Slug</th>
                     <th>狀態</th>
                     <th>操作</th>
@@ -81,89 +67,69 @@
 
                 <tbody>
 
+                <!-- 沒有任何分類時顯示 -->
                 <tr th:if="${#lists.isEmpty(categories)}">
-                    <td
-                            class="empty-state"
-                            colspan="5"
-                    >
-                        目前還沒有分類，建立第一個分類吧。
+                    <td colspan="5"
+                        class="empty-state">
+                        目前還沒有分類
                     </td>
                 </tr>
 
+                <!-- 顯示所有分類 -->
                 <tr th:each="category : ${categories}">
 
-                    <td
-                            class="category-id"
-                            th:text="${category.id}"
-                    >
+                    <td class="record-id"
+                        th:text="${category.id}">
                         1
                     </td>
 
-                    <td
-                            class="category-name"
-                            th:text="${category.name}"
-                    >
+                    <td class="record-name"
+                        th:text="${category.name}">
                         籃球鞋
                     </td>
 
-                    <td
-                            class="slug"
-                            th:text="${category.slug}"
-                    >
-                        basketball
+                    <td class="slug"
+                        th:text="${category.slug}">
+                        basketball-shoes
                     </td>
 
                     <td>
-
-                        <span
-                                class="status status-active"
-                                th:if="${category.active}"
-                        >
+                        <span class="status status-active"
+                              th:if="${category.active}">
                             啟用
                         </span>
 
-                        <span
-                                class="status status-inactive"
-                                th:unless="${category.active}"
-                        >
+                        <span class="status status-inactive"
+                              th:unless="${category.active}">
                             停用
                         </span>
-
                     </td>
 
                     <td>
-
                         <div class="actions">
 
-                            <a
-                                    class="btn btn-secondary btn-small"
-                                    th:href="@{/admin/categories/{id}/edit(id=${category.id})}"
-                            >
+                            <a class="btn btn-secondary btn-small"
+                               th:href="@{/admin/categories/{id}/edit(id=${category.id})}">
                                 修改
                             </a>
 
-                            <form
-                                    class="inline-form"
-                                    th:action="@{/admin/categories/{id}/delete(id=${category.id})}"
-                                    method="post"
-                                    onsubmit="return confirm('確定要刪除這個分類嗎？');"
-                            >
-                                <button
-                                        class="btn btn-danger btn-small"
-                                        type="submit"
-                                >
+                            <form class="inline-form"
+                                  th:action="@{/admin/categories/{id}/delete(id=${category.id})}"
+                                  method="post"
+                                  onsubmit="return confirm('確定要刪除這個分類嗎？');">
+
+                                <button class="btn btn-danger btn-small"
+                                        type="submit">
                                     刪除
                                 </button>
                             </form>
 
                         </div>
-
                     </td>
 
                 </tr>
 
                 </tbody>
-
             </table>
 
         </div>

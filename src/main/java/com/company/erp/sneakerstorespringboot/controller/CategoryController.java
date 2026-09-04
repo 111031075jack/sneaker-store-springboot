@@ -90,7 +90,7 @@ public class CategoryController {
     @PostMapping("/{id}")
     public String update(@PathVariable Long id,
                          @Valid
-                         @ModelAttribute("/categoryRequest")
+                         @ModelAttribute("categoryRequest")
                          CategoryRequest request,
                          BindingResult result,
                          Model model,
